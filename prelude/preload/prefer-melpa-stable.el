@@ -1,4 +1,5 @@
 ;; See https://github.com/bbatsov/prelude/issues/674#issuecomment-255596298
+(require 'package)
 
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/") t)
