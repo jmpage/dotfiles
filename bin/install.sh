@@ -51,6 +51,25 @@ EOF
     ;;
 esac
 
+case $os in
+  MacOS)
+    curl -Lo $HOME/Downloads/emacs.dmg https://emacsformacosx.com/emacs-builds/Emacs-27.1-1-universal.dmg
+    hdiutil attach $HOME/Downloads/emacs.dmg
+    sudo cp /Volumes/Emacs/Emacs.app /Applications/
+    hdiutil unmount /Volumes/Emacs
+    rm $HOME/Downloads/emacs.dmg
+
+    # TODO: automate full disk access permissions?
+
+    # Fix full disk access issues related to permissions being granted to emacs but not the rubyscript which launches it.
+    # https://github.com/caldwell/build-emacs/issues/84#issuecomment-545754668
+    cd /Applications/Emacs.app/Contents/MacOS
+    mv Emacs Emacs.old
+    ln -s Emacs-x86_64-10_14 Emacs
+    cd $HOME
+  ;;
+esac # TODO: linux/ubuntu
+
 curl -L https://github.com/bbatsov/prelude/raw/master/utils/installer.sh | sh
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
