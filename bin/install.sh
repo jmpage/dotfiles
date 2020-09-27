@@ -41,7 +41,13 @@ Categories=Utility;Terminal
 EOF
     ;;
   MacOS)
-    # TODO: Download and install alacritty
+    curl -Lo $HOME/Downloads/alacritty.dmg $(curl -s https://api.github.com/repos/alacritty/alacritty/releases/latest | grep -o 'https://.*.dmg')
+    hdiutil attach $HOME/Downloads/alacritty.dmg
+    sudo cp /Volumes/Alacritty/Alacritty.app /Applications/
+    hdiutil unmount /Volumes/Alacritty
+    rm $HOME/Downloads/alacritty.dmg
+
+    # TODO: automate full disk access permissions?
     ;;
 esac
 
