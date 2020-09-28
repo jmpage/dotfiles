@@ -531,7 +531,14 @@ colors:
 #
 # If the same trigger is assigned to multiple actions, all of them are executed
 # in the order they were defined in.
-#key_bindings:
+key_bindings:
+  # These keybindings are specifically for MacOS
+  - { key: B,     mods: Alt,     chars: "\x1bb" } # Meta B
+  - { key: F,     mods: Alt,     chars: "\x1bf" } # Meta F
+  - { key: V,     mods: Control, action: ScrollPageDown }
+  - { key: V,     mods: Alt,     action: ScrollPageUp }
+  - { key: Left,  mods: Alt,     chars: "\x1bB" } # Meta Left
+  - { key: Right, mods: Alt,     chars: "\x1bF" } # Meta Right
   #- { key: Paste,                                action: Paste          }
   #- { key: Copy,                                 action: Copy           }
   #- { key: L,         mods: Control,             action: ClearLogNotice }
