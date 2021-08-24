@@ -96,6 +96,7 @@ ln -s $HOME/workspace/personal/dotfiles/files/home/config/alacritty $HOME/.confi
 ln -s $HOME/workspace/personal/dotfiles/files/home/emacs.d/personal/personal.el $HOME/.emacs.d/personal/personal.el
 ln -s $HOME/workspace/personal/dotfiles/files/home/emacs.d/personal/preload/prefer-melpa-stable.el $HOME/.emacs.d/personal/preload/prefer-melpa-stable.el
 ln -s $HOME/workspace/personal/dotfiles/files/home/emacs.d/personal/preload/tmux-compat.el $HOME/.emacs.d/personal/preload/tmux-compat.el
+ln -s $HOME/workspace/personal/dotfiles/files/home/emacs.d/personal/preload/alternate-backup-directory.el $HOME/.emacs.d/personal/preload/alternate-backup-directory.el
 
 if [ $os == "MacOS" ]; then
   defaults write com.apple.dock autohide 1
