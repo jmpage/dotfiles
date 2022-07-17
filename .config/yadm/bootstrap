@@ -1,0 +1,76 @@
+#!/bin/bash
+
+BS_S_SUCCESS=0
+export BS_S_FAIL=1
+export BS_S_SKIP=2
+
+finish () {
+    echo -e "\nLogs available in $BOOTSTRAP_TMP/logs"
+
+    if [ -f $BS_POSTINSTALL_LOG ]; then
+        echo -e "\nPost install messages:"
+        cat $BS_POSTINSTALL_LOG
+    fi
+}
+
+export BOOTSTRAP_D="${BASH_SOURCE[0]}.d"
+
+BOOTSTRAP_TMP=$(mktemp -u -d "${TMPDIR:-/tmp/}yadm-bootstrap.XXXXXX")
+LOG_DIR=$BOOTSTRAP_TMP/logs
+mkdir -p $LOG_DIR/config
+mkdir $LOG_DIR/install
+
+export BS_CURRENT_SCRIPT=""
+export BS_POSTINSTALL_LOG=$BOOTSTRAP_TMP/postinstall.log
+
+postinstall () {
+    echo -e "\t$BS_CURRENT_SCRIPT\t$1" > $BS_POSTINSTALL_LOG
+}
+export -f postinstall
+
+helper () {
+    local helper_name=$1
+    shift
+    $BOOTSTRAP_D/helper/$helper_name $@
+}
+export -f helper
+
+# TODO: Support finding and executing OS-specific scripts
+bootstrap () {
+    BS_CURRENT_SCRIPT=$1
+    local out="$LOG_DIR/$1.log"
+    echo -ne "\t$1...\t\t"
+
+    $BOOTSTRAP_D/$1 &> $out
+    local status=$?
+
+    case $status in
+        $BS_S_SUCCESS) echo "success" ;;
+        $BS_S_SKIP) echo "skipped" ;;
+        $BS_S_FAIL)
+            echo "error"
+            finish
+            exit 1
+            ;;
+        *)
+            echo "unknown status $status"
+            finish
+            exit 1
+            ;;
+    esac
+}
+
+bootstrap install/asdf
+bootstrap install/alacritty
+bootstrap install/emacs
+bootstrap install/ripgrep
+bootstrap install/prelude
+bootstrap install/zsh
+bootstrap install/ohmyzsh
+bootstrap install/powerlevel10k
+bootstrap install/powerlevel10k_fonts
+bootstrap config/filesystem_ui
+bootstrap config/general_ui
+bootstrap config/shortcuts
+
+finish

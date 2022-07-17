@@ -1,0 +1,19 @@
+#!/bin/bash
+set -euo pipefail
+
+case $(uname -s) in
+    Darwin*)
+        # TODO: Move to apple_dock specific config
+        # TODO: Verify before write
+        defaults write com.apple.dock autohide 1
+        defaults write com.apple.dock tilesize 40
+        ;;
+    Linux*)
+        echo "Nothing to configure for Linux"
+        exit $BS_S_SKIP
+        ;;
+    *)
+        echo "Skipping general ui config. Unhandled OS $(uname -s) detected."
+        exit 1
+        ;;
+esac

@@ -1,0 +1,53 @@
+#!/bin/bash
+set -euo pipefail
+
+configured=0
+
+# TODO: Move finder / NSGlobalDomain to separate config
+
+case $(uname -s) in
+    Darwin*)
+        # TODO: Verify before writing
+
+        # Show file extensions
+        defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+
+        # Show full path in finder
+        defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
+
+        # Default list view in finder
+        defaults write com.apple.Finder FXPreferredViewStyle Nlsv
+
+        # Show hidden files in finder
+        defaults write com.apple.Finder AppleShowAllFiles -bool true
+
+        killall Finder
+        configured=1
+        ;;
+    Linux*)
+        if (which gsettings > /dev/null); then
+            for setting in \
+                "org.gnome.nautilus.preferences default-folder-viewer 'list-view'"
+            do
+                helper gsettings_update $setting; result=$?
+                case $result in
+                    0) configured=1;;
+                    $BS_SKIP) ;;
+                    *) exit $result ;;
+                esac
+            done
+        else
+            echo "Unknown file manager."
+            exit $BS_S_FAIL
+        fi
+        ;;
+    *)
+        echo "Unhandled OS $(uname -s) detected."
+        exit $BS_S_FAIL
+        ;;
+esac
+
+if [ $configured -eq 0 ]; then
+    echo "No configuration changed."
+    exit $BS_S_SKIP
+fi

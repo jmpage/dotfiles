@@ -1,0 +1,14 @@
+#!/bin/bash
+set -euo pipefail
+
+if (which zsh > /dev/null); then
+    echo "zsh is already installed."
+    exit $BS_S_SKIP
+elif (which brew > /dev/null); then
+    brew install zsh
+elif (which apt-get > /dev/null); then
+    apt-get install zsh
+else
+    echo "Unhandled package manager."
+    exit $BS_S_FAIL
+fi

@@ -1,0 +1,14 @@
+#!/bin/bash
+set -euo pipefail
+
+if (which rg > /dev/null); then
+    echo "ripgrep is already installed"
+    exit $BS_S_SKIP
+elif (which brew > /dev/null); then
+    brew install ripgrep
+elif (which apt-get > /dev/null); then
+    sudo apt-get install ripgrep
+else
+    echo "Unhandled package manager"
+    exit $BS_S_FAIL
+fi

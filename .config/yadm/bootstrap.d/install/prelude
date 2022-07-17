@@ -1,0 +1,6 @@
+#!/bin/bash
+set -euo pipefail
+
+ls .emacs.d/modules/prelude-*.el > /dev/null && echo "prelude is already installed." && exit $BS_S_SKIP
+
+curl -L https://github.com/bbatsov/prelude/raw/master/utils/installer.sh | sh

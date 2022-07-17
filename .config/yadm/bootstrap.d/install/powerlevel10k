@@ -1,0 +1,6 @@
+#!/bin/bash
+set -euo pipefail
+
+[ -d ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k ] && echo "powerlevel10k is already installed." && exit $BS_S_SKIP
+
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
