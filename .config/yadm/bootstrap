@@ -69,6 +69,7 @@ bootstrap install/zsh
 bootstrap install/ohmyzsh
 bootstrap install/powerlevel10k
 bootstrap install/powerlevel10k_fonts
+bootstrap install/tpm
 bootstrap config/filesystem_ui
 bootstrap config/general_ui
 bootstrap config/shortcuts
