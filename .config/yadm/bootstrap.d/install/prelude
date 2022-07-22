@@ -1,6 +1,24 @@
 #!/bin/bash
 set -euo pipefail
 
-ls .emacs.d/modules/prelude-*.el > /dev/null && echo "prelude is already installed." && exit $BS_S_SKIP
+changed=0
 
-curl -L https://github.com/bbatsov/prelude/raw/master/utils/installer.sh | sh
+if [ -f "$HOME/.emacs.d/core/prelude-core.el" ]; then
+    echo "prelude is already installed."
+else
+    echo "installing prelude"
+    curl -L https://github.com/bbatsov/prelude/raw/master/utils/installer.sh | sh
+    changed=1
+fi
+
+if [ ! -L $HOME/.emacs.d/personal ]; then
+    echo "Symlinking .emacs.d/personal to .config/prelude/personal"
+    rm -r $HOME/.emacs.d/personal
+    ln -s $HOME/.config/prelude/personal $HOME/.emacs.d/personal
+    changed=1
+fi
+
+if [ $changed -eq 0 ]; then
+    echo "No changes made"
+    exit $BS_S_SKIP
+fi
