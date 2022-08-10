@@ -75,7 +75,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(asdf git)
+plugins=(asdf git ripgrep)
 # macos specific: brew osx rake rbenv ruby dotenv bundler
 
 if [ -f ~/.local.zsh ]; then
