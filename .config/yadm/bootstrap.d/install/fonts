@@ -1,0 +1,51 @@
+#!/bin/bash
+set -euo pipefail
+
+font_dir=""
+
+case $(uname -s) in
+    Linux*)
+        font_dir=$HOME/.local/share/fonts
+        ;;
+    Darwin*)
+        font_dir=$HOME/Library/Fonts
+        ;;
+    *)
+        echo "Unhandled OS $(uname -s) detected."
+        exit $BS_S_FAIL
+        ;;
+esac
+
+mkdir -p $font_dir
+installed=0
+
+install_font () {
+    local url=$1
+    local font_name=$(echo ${url##https://*/} | sed 's/%20/ /g')
+    if ! [ -f "$font_dir/$font_name" ]; then
+        curl -o "$font_dir/$font_name" $url
+        installed=1
+    else
+        echo "'$font_name' is already installed; skipping"
+    fi
+}
+
+for font_url in \
+    "https://raw.githubusercontent.com/romkatv/powerlevel10k-media/master/MesloLGS%20NF%20Regular.ttf" \
+    "https://raw.githubusercontent.com/romkatv/powerlevel10k-media/master/MesloLGS%20NF%20Bold.ttf" \
+    "https://raw.githubusercontent.com/romkatv/powerlevel10k-media/master/MesloLGS%20NF%20Italic.ttf" \
+    "https://raw.githubusercontent.com/romkatv/powerlevel10k-media/master/MesloLGS%20NF%20Bold%20Italic.ttf" \
+    "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/patched-fonts/FantasqueSansMono/Regular/complete/Fantasque%20Sans%20Mono%20Regular%20Nerd%20Font%20Complete.ttf" \
+    "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/patched-fonts/FantasqueSansMono/Italic/complete/Fantasque%20Sans%20Mono%20Italic%20Nerd%20Font%20Complete.ttf" \
+    "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/patched-fonts/FantasqueSansMono/Bold/complete/Fantasque%20Sans%20Mono%20Bold%20Nerd%20Font%20Complete.ttf" \
+    "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/patched-fonts/FantasqueSansMono/Bold-Italic/complete/Fantasque%20Sans%20Mono%20Bold%20Italic%20Nerd%20Font%20Complete.ttf"
+do
+    install_font $font_url
+done
+
+if [ $installed -eq 1 ]; then
+    which fc-cache && fc-cache -f -v
+else
+    echo "No fonts installed."
+    exit $BS_S_SKIP
+fi

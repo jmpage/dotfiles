@@ -60,6 +60,7 @@ bootstrap () {
     esac
 }
 
+bootstrap install/fonts
 bootstrap install/asdf
 bootstrap install/alacritty
 bootstrap install/emacs
@@ -68,7 +69,6 @@ bootstrap install/prelude
 bootstrap install/zsh
 bootstrap install/ohmyzsh
 bootstrap install/powerlevel10k
-bootstrap install/powerlevel10k_fonts
 bootstrap install/tpm
 bootstrap config/filesystem_ui
 bootstrap config/general_ui
