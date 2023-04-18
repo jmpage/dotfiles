@@ -1,8 +1,0 @@
-#!/bin/bash
-set -euo pipefail
-
-which asdf > /dev/null && echo "asdf is already installed" && exit $BS_S_SKIP
-
-git clone https://github.com/asdf-vm/asdf.git ~/.asdf
-cd ~/.asdf
-git checkout "$(git describe --abbrev=0 --tags)"
