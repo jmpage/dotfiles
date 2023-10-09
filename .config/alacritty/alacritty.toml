@@ -1,0 +1,99 @@
+# Theme: tokyo-night: https://github.com/zatchheems/tokyo-night-alacritty-theme/blob/main/tokyo-night.yaml
+[colors]
+draw_bold_text_with_bright_colors = false
+
+[colors.bright]
+black = "0x444b6a"
+blue = "0x7da6ff"
+cyan = "0x0db9d7"
+green = "0xb9f27c"
+magenta = "0xbb9af7"
+red = "0xff7a93"
+white = "0xacb0d0"
+yellow = "0xff9e64"
+
+[colors.cursor]
+cursor = "0xa9b1d6"
+text = "0x32344a"
+
+[colors.normal]
+black = "0x32344a"
+blue = "0x7aa2f7"
+cyan = "0x449dab"
+green = "0x9ece6a"
+magenta = "0xad8ee6"
+red = "0xf7768e"
+white = "0x787c99"
+yellow = "0xe0af68"
+
+[colors.primary]
+background = "0x1a1b26"
+foreground = "0xa9b1d6"
+
+[colors.selection]
+background = "0x373b41"
+text = "0xa9b1d6"
+
+[debug]
+log_level = "Warn"
+
+[font]
+size = 11.0
+
+[font.glyph_offset]
+x = 0
+y = 0
+
+[font.normal]
+family = "FantasqueSansM Nerd Font"
+
+[font.offset]
+x = 0
+y = 0
+
+[[keyboard.bindings]]
+chars = "\u001Bb"
+key = "B"
+mods = "Alt"
+
+[[keyboard.bindings]]
+chars = "\u001Bf"
+key = "F"
+mods = "Alt"
+
+[[keyboard.bindings]]
+action = "ScrollPageDown"
+key = "V"
+mods = "Control"
+
+[[keyboard.bindings]]
+action = "ScrollPageUp"
+key = "V"
+mods = "Alt"
+
+[[keyboard.bindings]]
+chars = "\u001BB"
+key = "Left"
+mods = "Alt"
+
+[[keyboard.bindings]]
+chars = "\u001BF"
+key = "Right"
+mods = "Alt"
+
+[scrolling]
+history = 100000
+multiplier = 3
+
+[window]
+decorations = "full"
+dynamic_padding = false
+startup_mode = "Windowed"
+
+[window.dimensions]
+columns = 0
+lines = 0
+
+[window.padding]
+x = 0
+y = 0
