@@ -36,4 +36,19 @@ fi
 
 source $ZSH/oh-my-zsh.sh
 
+function precmd {
+    PREV_EXIT=$?
+    if [ "$PRECMD_NEWLINE_LOGIN" -eq 1 ]; then
+        if [ "$PREV_EXIT" -eq 0 ]; then
+            printf "$(tput setaf 2)➜$(tput sgr0) $PREV_EXIT\n"
+        else
+            printf "$(tput setaf 1)➜$(tput sgr0) $PREV_EXIT\n"
+        fi
+    else
+        export PRECMD_NEWLINE_LOGIN=1
+    fi
+}
+
+export PROMPT='$(git_prompt_info) %{$fg[blue]%}\$%{$reset_color%} '
+
 export EDITOR='emacs -nw'
