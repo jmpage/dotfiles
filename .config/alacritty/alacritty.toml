@@ -88,6 +88,7 @@ multiplier = 3
 [window]
 decorations = "full"
 dynamic_padding = false
+option_as_alt= "Both"
 startup_mode = "Windowed"
 
 [window.dimensions]
