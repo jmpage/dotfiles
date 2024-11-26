@@ -1,1 +1,1 @@
-(set-face-attribute 'default nil :family "FantasqueSansMono Nerd Font")
+(set-face-attribute 'default nil :family "FantasqueSansM Nerd Font")
