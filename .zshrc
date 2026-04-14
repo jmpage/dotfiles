@@ -1,54 +1,58 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# Dedupe PATH
+typeset -U path PATH
 
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
-
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# You can also set it to another string to have that shown instead of the default red dots.
-# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
-# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(asdf git)
-
-if [ -f ~/.local.zsh ]; then
-  source ~/.local.zsh
+if [ -f "$HOME/.local.zsh" ]; then
+  source "$HOME/.local.zsh"
 fi
 
-source $ZSH/oh-my-zsh.sh
+autoload -Uz vcs_info
+setopt prompt_subst
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:git:*' check-for-changes true
+zstyle ':vcs_info:git:*' unstagedstr '✗'
+zstyle ':vcs_info:git:*' stagedstr '✗'
+zstyle ':vcs_info:git:*' formats '%F{blue}git:(%F{red}%b%F{blue})%f %F{yellow}%u%f'
+zstyle ':vcs_info:git:*' actionformats '%F{blue}git:(%F{red}%b%F{blue})%f %F{yellow}%u%f (%a) '
+zstyle ':vcs_info:*' nvcsformats ' '
 
-function precmd {
-    PREV_EXIT=$?
-    if [ "$PRECMD_NEWLINE_LOGIN" -eq 1 ]; then
-        if [ "$PREV_EXIT" -eq 0 ]; then
-            printf "$(tput setaf 2)➜$(tput sgr0) $PREV_EXIT\n"
+# Collapse staged+unstaged into a single ✗
++vi-git-dirty() {
+    if [[ -n ${hook_com[staged]} || -n ${hook_com[unstaged]} ]]; then
+        hook_com[unstaged]='✗ '
+        hook_com[staged]=''
+    fi
+}
+zstyle ':vcs_info:git*+set-message:*' hooks git-dirty
+
+precmd() {
+    local prev_exit=$?
+    vcs_info
+    if [[ ${PRECMD_NEWLINE_LOGIN:-0} -eq 1 ]]; then
+        if (( prev_exit == 0 )); then
+            print -P "%F{green}➜%f $prev_exit"
         else
-            printf "$(tput setaf 1)➜$(tput sgr0) $PREV_EXIT\n"
+            print -P "%F{red}➜%f $prev_exit"
         fi
     else
-        export PRECMD_NEWLINE_LOGIN=1
+        PRECMD_NEWLINE_LOGIN=1
     fi
 }
 
-export PROMPT='$(git_prompt_info) %{$fg[blue]%}\$%{$reset_color%} '
+PROMPT='%B${vcs_info_msg_0_}%b%F{blue}$%f '
 
 export EDITOR='emacs -nw'
+
+# Setup asdf
+[ -d "${ASDF_DATA_DIR:-$HOME/.asdf}/shims" ] && export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+[ -f "${ASDF_DATA_DIR:-$HOME/.asdf}/completions/_asdf" ] && fpath=("${ASDF_DATA_DIR:-$HOME/.asdf}/completions" $fpath)
+
+# Activate mise
+command -v mise >/dev/null && eval "$(mise activate zsh)"
+
+# Initialise completions
+autoload -Uz compinit && compinit
+
+export PATH="/usr/local/go/bin:$PATH"
+export PATH="$PATH:$HOME/go/bin"
+
+export PATH="$PATH:$HOME/.local/bin"
