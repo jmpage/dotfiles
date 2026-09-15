@@ -1,13 +1,11 @@
 # Dotfiles
 
-The dotfiles in this repository are managed using [yadm], which can be
-installed via Homebrew and Apt. The included bootstrap scripts are
-intended to support installing standard tools for MacOS and Ubuntu.
+The dotfiles in this repository are managed using [chezmoi].
 
 To get started on a fresh machine:
 
 ``` shell
-yadm clone --bootstrap <URL>
+chezmoi init --apply jmpage/dotfiles
 ```
 
-[yadm]: https://yadm.io
+[chezmoi]: https://www.chezmoi.io/

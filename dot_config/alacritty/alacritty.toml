@@ -3,36 +3,36 @@
 draw_bold_text_with_bright_colors = false
 
 [colors.bright]
-black = "0x444b6a"
-blue = "0x7da6ff"
-cyan = "0x0db9d7"
-green = "0xb9f27c"
-magenta = "0xbb9af7"
-red = "0xff7a93"
-white = "0xacb0d0"
-yellow = "0xff9e64"
+black = "#444b6a"
+blue = "#7da6ff"
+cyan = "#0db9d7"
+green = "#b9f27c"
+magenta = "#bb9af7"
+red = "#ff7a93"
+white = "#acb0d0"
+yellow = "#ff9e64"
 
 [colors.cursor]
-cursor = "0xa9b1d6"
-text = "0x32344a"
+cursor = "#a9b1d6"
+text = "#32344a"
 
 [colors.normal]
-black = "0x32344a"
-blue = "0x7aa2f7"
-cyan = "0x449dab"
-green = "0x9ece6a"
-magenta = "0xad8ee6"
-red = "0xf7768e"
-white = "0x787c99"
-yellow = "0xe0af68"
+black = "#32344a"
+blue = "#7aa2f7"
+cyan = "#449dab"
+green = "#9ece6a"
+magenta = "#ad8ee6"
+red = "#f7768e"
+white = "#787c99"
+yellow = "#e0af68"
 
 [colors.primary]
-background = "0x1a1b26"
-foreground = "0xa9b1d6"
+background = "#1a1b26"
+foreground = "#a9b1d6"
 
 [colors.selection]
-background = "0x373b41"
-text = "0xa9b1d6"
+background = "#373b41"
+text = "#a9b1d6"
 
 [debug]
 log_level = "Warn"
@@ -52,12 +52,12 @@ x = 0
 y = 0
 
 [[keyboard.bindings]]
-chars = "\u001Bb"
+chars = "\u001BB"
 key = "B"
 mods = "Alt"
 
 [[keyboard.bindings]]
-chars = "\u001Bf"
+chars = "\u001BF"
 key = "F"
 mods = "Alt"
 
