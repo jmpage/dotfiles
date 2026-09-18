@@ -1,0 +1,10 @@
+[settings]
+auto_install = false
+github_attestations = true
+locked_verify_provenance = true
+lockfile = true
+minimum_release_age = "14d"
+not_found_auto_install = false
+paranoid = true
+slsa = true
+use_versions_host_track = false
